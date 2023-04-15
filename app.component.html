@@ -1,0 +1,92 @@
+<!-- Getting Input values -->
+<div class="card mt-5" style="padding: 20px;">
+  <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+    <div class="form-group">
+      <input type="text" [(ngModel)]="name" name="fname" id="name" class="form-control" placeholder="Student Name">
+    </div>
+    <div class="form-group">
+      <input type="text"  [(ngModel)]="email" name="femail" id="email" class="form-control" placeholder="Student Email">
+    </div>
+    <div class="form-group">
+      <input type="number" [(ngModel)]="subject1" name="fsubject1" id="subject1" class="form-control" placeholder="Marks in Subject 1">
+    </div>
+    <div class="form-group">
+      <input type="number" [(ngModel)]="subject2" name="fsubject2" id="subject2" class="form-control" placeholder="Marks in Subject 2">
+    </div>
+    <div class="form-group">
+      <input type="number" [(ngModel)]="subject3" name="fsubject3" id="subject3" class="form-control" placeholder="Marks in Subject 3">
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Add" (ngSubmit)="clearLocalData" class="btn btn-primary w-100">
+    </div>
+  </form>
+</div>
+
+<!-- Apply Filters -->
+
+<label style="padding:5px 10px">Select Subject</label>
+<select class="form-select" aria-label="Default select example" [(ngModel)]="filterBy">
+  <option value="subject1">subject1</option>
+  <option value="subject2">subject2</option>
+  <option value="subject3">subject3</option>
+</select>
+
+<label style="padding:10px 20px">Select Filter</label> 
+  <select class="form-select" aria-label="Default select example" [(ngModel)]="constraint">
+  <option value="above">Above</option>
+  <option value="below">Below</option>
+  <option value="between">Between</option>
+</select>
+
+<table>
+<tr>
+  <td *ngIf="(constraint==='above')">
+    <label style="padding-right:10px">Above</label> 
+    <input type="number" name="value1" [(ngModel)]="value1">
+  </td>
+  <td *ngIf="(constraint==='below')">
+    <label style="padding-right:10px">Below</label>
+    <input type="number" name="value1" [(ngModel)]="value1">
+  </td>
+  <td *ngIf="(constraint=='between')">
+    <label style="padding-right:10px">From</label>
+    <input matInput name="value1" [(ngModel)]="value1" >
+    <label style="padding:10px 10px">To</label>
+    <input matInput name="value2" [(ngModel)]="value2">
+  </td>
+</tr>
+<table>
+<br>
+
+<div >
+  <button class="btn btn-primary w-20" (click)="applyFilter()">Apply Filter</button>
+  <button class="btn btn-primary w-20" style="margin-left: 10px" (click)="clearFilter()">Clear Filter</button>
+</div>
+
+<!-- Getting Data -->
+
+<div class="mt-5">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email Address</th> 
+        <th>Subject 1</th>
+        <th>Subject 2</th>
+        <th>Subject 3</th>
+      </tr> 
+    </thead>
+    <tbody class="tbody">
+      <tr *ngFor="let student of localData">
+        <td>{{student.name}}</td>
+        <td>{{student.email}}</td>
+        <td>{{student.subject1}}</td>
+        <td>{{student.subject2}}</td>
+        <td>{{student.subject3}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+  <button class="btn btn-primary w-20" (click)="clearGlobalData()">Clear All Data</button>
+  </div>
+</div>
